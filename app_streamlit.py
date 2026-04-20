@@ -12,27 +12,26 @@ clf, reg = load_models()
 
 st.set_page_config(page_title="Student Prediction System", layout="wide")
 
-st.title("Student Placement & Salary Prediction System")
+st.title("🎓 Student Placement & Salary Prediction System")
 
 st.sidebar.title("📌 Input Guide")
 st.sidebar.info(
     "Aplikasi ini digunakan untuk memprediksi:\n"
-    "- Status Placement (Lulus / Tidak)\n"
-    "- Estimasi Salary (LPA)\n\n"
-    "Silakan isi semua data pada form utama di sebelah kanan."
+    "- 🎯 Status Placement (Lulus / Tidak)\n"
+    "- 💰 Estimasi Salary (LPA)\n\n"
+    "Silakan isi semua data pada form utama."
 )
 
 st.sidebar.markdown("---")
-st.sidebar.success("Model Ready (Random Forest + Gradient Boosting)")
+st.sidebar.success("🤖 Model Ready (Random Forest + Gradient Boosting)")
+st.sidebar.caption("Pastikan input sesuai data mahasiswa")
 
-st.sidebar.caption("Pastikan input sesuai kondisi mahasiswa")
-
-st.header("Input Student Data")
+st.header("🧾 Input Student Data")
 
 col1, col2, col3 = st.columns(3)
 
 with col1:
-    st.subheader("Academic")
+    st.subheader("📚 Academic")
     gender = st.selectbox("Gender", ["Male", "Female"])
     branch = st.selectbox("Branch", ["CS", "IT", "ECE", "EEE", "MECH"])
     cgpa = st.number_input("CGPA", 0.0, 10.0, 7.0)
@@ -41,7 +40,7 @@ with col1:
     backlogs = st.number_input("Backlogs", 0, 10, 0)
 
 with col2:
-    st.subheader("Skills")
+    st.subheader("🧠 Skills")
     coding_skill_rating = st.number_input("Coding Skill", 0, 10, 5)
     communication_skill_rating = st.number_input("Communication Skill", 0, 10, 5)
     aptitude_skill_rating = st.number_input("Aptitude Skill", 0, 10, 5)
@@ -52,7 +51,7 @@ with col2:
     certifications_count = st.number_input("Certifications", 0, 10, 1)
 
 with col3:
-    st.subheader("Lifestyle")
+    st.subheader("🧘 Lifestyle")
     study_hours_per_day = st.number_input("Study Hours", 0.0, 24.0, 5.0)
     attendance_percentage = st.number_input("Attendance %", 0.0, 100.0, 75.0)
     sleep_hours = st.number_input("Sleep Hours", 0.0, 24.0, 7.0)
@@ -66,7 +65,7 @@ with col3:
 
 st.markdown("---")
 
-if st.button("Predict"):
+if st.button("🚀 Predict"):
 
     input_data = pd.DataFrame([{
         "gender": gender,
@@ -96,20 +95,20 @@ if st.button("Predict"):
     placement = clf.predict(input_data)[0]
     salary = reg.predict(input_data)[0]
 
-    st.subheader("Prediction Result")
+    st.subheader("📊 Prediction Result")
 
     colA, colB = st.columns(2)
 
     with colA:
         if placement == 1:
-            st.success("PLACED")
+            st.success("🎉 PLACED")
         else:
-            st.error("NOT PLACED")
+            st.error("❌ NOT PLACED")
 
     with colB:
-        st.info(f"Salary Prediction: {round(salary, 2)} LPA")
+        st.info(f"💰 Salary Prediction: {round(salary, 2)} LPA")
 
-    st.subheader("Visualization")
+    st.subheader("📈 Visualization")
 
     chart_df = pd.DataFrame({
         "Feature": [
@@ -128,5 +127,5 @@ if st.button("Predict"):
 
     st.bar_chart(chart_df.set_index("Feature"))
 
-    st.subheader("Input Summary")
+    st.subheader("🧾 Input Summary")
     st.dataframe(input_data)
